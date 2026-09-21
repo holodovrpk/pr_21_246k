@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pr_21_246k"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
     <StackPanel>
         <DataGrid x:Name="tableProduct" Height="200" Margin="10"
                   AutoGenerateColumns="False">
@@ -14,9 +14,32 @@
                 <DataGridTextColumn Header="Название" Width="300" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Цена" Width="120" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Количество" Width="120" Binding="{Binding Count}"/>
+
+
+                <DataGridTemplateColumn Header="Действие">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Купить" Click="Buy_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
             </DataGrid.Columns>
             
         </DataGrid>
+
+        <StackPanel Margin="10" Background="Bisque">
+            <TextBlock Text="Название" Margin="3"/>
+            <TextBox x:Name="txtName" Margin="3"/>
+            <TextBlock Text="Цена" Margin="3"/>
+            <TextBox x:Name="txtPrice" Margin="3"/>
+            <TextBlock Text="Количество" Margin="3"/>
+            <TextBox x:Name="txtCount" Margin="3"/>
+
+            <Button Content="Добавить" Margin="3" Click="Add_Click"/>
+            <Button Content="Удалить" Margin="3" Click="Del_Click"/>
+        </StackPanel>
         
     </StackPanel>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,7 +17,8 @@ namespace pr_21_246k
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Product> products = new List<Product>();
+        ObservableCollection<Product> products = 
+            new ObservableCollection<Product>();
 
 
         public MainWindow()
@@ -32,8 +34,45 @@ namespace pr_21_246k
             tableProduct.ItemsSource = products;
         }
 
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            string name = txtName.Text;
+            int price = Convert.ToInt32(txtPrice.Text);
+            int count = Convert.ToInt32(txtCount.Text);
+
+            products.Add(new Product { Name = name, 
+                Count = count, 
+                Price = price });
+        }
+
+        private void Del_Click(object sender, RoutedEventArgs e)
+        {
+            if (tableProduct.SelectedItem is Product p)
+            {
+                MessageBoxResult q = MessageBox.Show("Вы точно хотите удалить?",
+                    "Удаление",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (q == MessageBoxResult.Yes) 
+                    products.Remove(p);
+            }
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).DataContext is Product p)
+            {
+                if (p.Count > 0)
+                    p.Count -= 1;
+                else
+                    MessageBox.Show("Товар закончился");
 
 
+                tableProduct.ItemsSource = null;
+                tableProduct.ItemsSource = products;
+            }
 
+        }
     }
 }
